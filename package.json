@@ -1,6 +1,6 @@
 {
   "name": "delivery",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/server"
@@ -11,6 +11,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "express-validator": "^6.6.1",
     "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
