@@ -2,7 +2,7 @@ var DBHelper 	= require('../helper');
 
 exports.get = function(id, callback) {
 	var sqlQuery = "SELECT request.*, user.email, user.custom,			\
-						   manager.email, manager.custom, 				\
+						   user.tlfn, manager.email, manager.custom, 	\
 						   service.name, service.status					\
 					FROM request, user, service, user as manager 		\
 					WHERE service.id 		   = '" + id + "' 		AND	\
@@ -17,7 +17,7 @@ exports.get = function(id, callback) {
 
 exports.getByStatus = function(obj, callback) {
 	var sqlQuery = "SELECT request.*, user.email, user.custom,			\
-						   manager.email, manager.custom, 				\
+						   user.tlfn, manager.email, manager.custom, 	\
 						   service.name, service.status					\
 					FROM request, user, service, user as manager 		\
 					WHERE service.id 		   = '" + obj.id + "' 	AND	\
@@ -33,7 +33,7 @@ exports.getByStatus = function(obj, callback) {
 
 exports.getByManager = function(obj, callback) {
 	var sqlQuery = "SELECT request.*, user.email, user.custom,			\
-						   manager.email, manager.custom, 				\
+						   user.tlfn, manager.email, manager.custom, 	\
 						   service.name, service.status					\
 					FROM request, user, service, user as manager 		\
 					WHERE service.id 		   = '" + obj.id + "' 	AND	\
@@ -49,7 +49,7 @@ exports.getByManager = function(obj, callback) {
 
 exports.getByUser = function(obj, callback) {
 	var sqlQuery = "SELECT request.*, user.email, user.custom,			\
-						   manager.email, manager.custom, 				\
+						   user.tlfn, manager.email, manager.custom, 	\
 						   service.name, service.status					\
 					FROM request, user, service, user as manager 		\
 					WHERE request.idservice    = service.id   		AND \
@@ -57,11 +57,7 @@ exports.getByUser = function(obj, callback) {
 						  user.id 			   = request.iduser		AND	\
 						  user.id 	   		   = '" + obj.user + "'		\
 					ORDER BY request.created_at, request.status DESC";
-	console.log(sqlQuery);
 	DBHelper.doQuery(sqlQuery, function(err, data) {
-		console.log(sqlQuery);
-		console.log(err);
-		console.log(data);
 		callback(err, data);
 	});
 };

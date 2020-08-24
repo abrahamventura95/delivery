@@ -3,6 +3,7 @@ var bcrypt		= require('bcrypt');
 var validator	= require('validator');
 var functions	= require('./functions');
 var queries		= require('../DB/Connections/user');
+var stats		= require('../DB/Connections/stats');
 
 function validateRegister(body, callback) {
 	//Empty validation
@@ -126,6 +127,7 @@ exports.edit = function(req, res){
 						id: 		req.user.sub,
 						password: 	hash,
 				    	type: 		req.body.type,
+				    	tlfn: 		req.body.tlfn,
 				    	custom: 	req.body.custom,
 				    	verified: 	req.body.verified
 					};					
@@ -136,6 +138,7 @@ exports.edit = function(req, res){
 					var user = {
 						id: 		req.user.sub,
 				    	type: 		req.body.type,
+				    	tlfn: 		req.body.tlfn,
 				    	custom: 	req.body.custom,
 				    	verified: 	req.body.verified
 					};					
@@ -161,3 +164,9 @@ exports.delete = function(req, res){
 		res.json(data);
 	});
 }
+
+exports.getStats = function(req, res) {
+	stats.getStatsUser(req.user.sub, function(err, data){
+		res.json(data);
+	});
+};

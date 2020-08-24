@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `delivery`.`user` (
   `username` VARCHAR(16) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(64) NOT NULL,
+  `tlfn` VARCHAR(32) NULL,
   `type` ENUM('basic', 'delivery', 'admin') NOT NULL DEFAULT 'basic',
   `verified` BIT NULL DEFAULT 0,
   `custom` VARCHAR(255) NULL,
@@ -119,10 +120,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `delivery`.`request_end` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `iduser` INT NOT NULL,
-  `emailuser` VARCHAR(255) NULL,
   `idservice` INT NOT NULL,
   `idmanager` INT NOT NULL,
-  `emailmanager` VARCHAR(255) NULL,
   `from_lat` FLOAT(10,6) NULL,
   `from_lng` FLOAT(10,6) NULL,
   `to_lat` FLOAT(10,6) NULL,

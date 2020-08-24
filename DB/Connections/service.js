@@ -2,7 +2,7 @@ require('dotenv').config();
 var DBHelper 	= require('../helper');
 
 exports.getServices = function(callback) {
-	var sqlQuery = "SELECT service.id, email, username, 				\
+	var sqlQuery = "SELECT service.id, email, username, tlfn			\
 							name, description, status, image			\
 					FROM service, user									\
 					WHERE service.owner = user.id 						\
@@ -14,7 +14,7 @@ exports.getServices = function(callback) {
 
 exports.get = function(id, callback) {
 	var sqlQuery = "SELECT email, username, name, description,		\
-						   status, image							\
+						   status, image, tlfn						\
 					FROM service, user								\
 					WHERE service.id = '" + id + "' AND				\
 						  service.owner = user.id";

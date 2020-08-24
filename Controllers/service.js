@@ -1,4 +1,5 @@
 var queries		= require('../DB/Connections/service');
+var stats 		= require('../DB/Connections/stats');
 
 exports.getAll= function(req, res) {
 	queries.getServices(function(err, data){
@@ -48,3 +49,9 @@ exports.delete = function(req, res){
 		res.json(data);
 	});
 }
+
+exports.getStats = function(req, res) {
+	stats.getStatsService(req.param('id'), function(err, data){
+		res.json(data);
+	});
+};

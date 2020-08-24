@@ -9,6 +9,8 @@ module.exports = function(app) {
 	  	.post(auth.check, auth.isDelivery, controller.create)
 		.put(auth.check, auth.isDelivery, controller.edit)
 		.delete(auth.check, auth.isDelivery, controller.delete);
+	app.route('/service/stats')
+	  	.get(auth.check, controller.getStats);
 	app.route('/service/request')
 	  	.get(auth.check, auth.isOwner, request.get)
 	  	.post(auth.check, request.create)

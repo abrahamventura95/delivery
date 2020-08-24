@@ -50,7 +50,6 @@ exports.getByUser = function(req, res) {
 	var obj = {
 		user: req.user.sub
 	}
-	console.log('test');
 	queries.getByUser(obj, function(err, data){
 		res.json(data);
 	});

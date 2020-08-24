@@ -6,6 +6,8 @@ module.exports = function(app) {
 	  	.get(auth.check, controller.get)
 		.put(auth.check, controller.edit)
 		.delete(auth.check, controller.delete);
+	app.route('/user/stats')
+	  	.get(auth.check, controller.getStats);
 	app.route('/users')
 	  	.get(controller.getUsers);	  	
 	app.route('/register')

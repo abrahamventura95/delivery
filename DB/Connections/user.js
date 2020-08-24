@@ -5,7 +5,7 @@ var jwt 		= require('jsonwebtoken');
 
 exports.login = function (obj, callback) {
 	var sqlQuery = "SELECT id, email, password, username, 		\
-						   custom, verified, type				\
+						   custom, verified, type, tlfn			\
 					FROM user									\
 					WHERE `user`.`email` = '" + obj.email + "'";
 	DBHelper.doQuery(sqlQuery, function(err, data) {
@@ -37,7 +37,8 @@ exports.login = function (obj, callback) {
 		      		"email": 		data[0].email,
 		      		"verified": 	data[0].verified,
 		      		"custom": 		data[0].custom,
-		      		"type": 		data[0].type
+		      		"type": 		data[0].type,
+		      		"tlfn": 		data[0].tlfn
 		    	};	
 			}
 		}
@@ -46,8 +47,9 @@ exports.login = function (obj, callback) {
 };
 
 exports.getUsers = function(callback) {
-	var sqlQuery = "SELECT id, email, username,	custom, verified, type	\
-					FROM user											\
+	var sqlQuery = "SELECT id, email, username,	custom, verified, 	\
+						  type, tlfn								\
+					FROM user										\
 					Order by email";
 	DBHelper.doQuery(sqlQuery, function(err, data) {
 		callback(err, data);
@@ -55,8 +57,8 @@ exports.getUsers = function(callback) {
 };
 
 exports.get = function(id, callback) {
-	var sqlQuery = "SELECT email, username, custom, verified, type	\
-					FROM user										\
+	var sqlQuery = "SELECT email, username, custom, verified, type, tlfn	\
+					FROM user												\
 					WHERE id = '" + id + "'";
 	DBHelper.doQuery(sqlQuery, function(err, data) {
 		callback(err, data);
@@ -73,9 +75,10 @@ exports.existsUsername = function(username, callback) {
 };
 
 exports.create = function(obj, callback) {
-  	var sqlQuery = "INSERT INTO user (username, email, password)		\
-							VALUES ('" + obj.username		+ "',		\
-									'" + obj.email			+ "',		\
+  	var sqlQuery = "INSERT INTO user (username, email, tlfn, password)		\
+							VALUES ('" + obj.username		+ "',			\
+									'" + obj.email			+ "',			\
+									'" + obj.tlfn			+ "',			\
 									'" + obj.password 		+ "')";
 	DBHelper.doQuery(sqlQuery, function(err, data) {
 		callback(err, data);
@@ -91,6 +94,7 @@ exports.edit = function(obj, callback) {
 				"UPDATE `user` SET  									\
 				 	    `user`.`verified` 	="  + bool		 	+ ",	\
 				 	    `user`.`type`		='" + obj.type	 	+ "',	\
+				 	    `user`.`tlfn`		='" + obj.tlfn	 	+ "',	\
 				 	    `user`.`custom`		='" + obj.custom 	+ "'	\
 				WHERE `user`.`id`			='" + obj.id 		+ "'";
 		DBHelper.doQuery(sqlQuery, function(err, data) {
@@ -101,6 +105,7 @@ exports.edit = function(obj, callback) {
 	  			"UPDATE `user` SET  									\
 				 	    `user`.`verified` 	="  + bool		 	+ ",	\
 				 	    `user`.`type`		='" + obj.type	 	+ "',	\
+				 	    `user`.`tlfn`		='" + obj.tlfn	 	+ "',	\
 				 	    `user`.`custom`		='" + obj.custom 	+ "',	\
 					    `user`.`password` 	='" + obj.password	+ "'	\
 				WHERE `user`.`id`			='" + obj.id 		+ "'";
