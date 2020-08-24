@@ -19,3 +19,15 @@ exports.isDelivery = function(req, res, next){
 	if(req.user.type != 'delivery') return res.sendStatus(process.env.UNAUTHORIZED);
     next();			    
 }
+
+exports.isOwner = function(req, res, next){
+    var sqlQuery = "SELECT COUNT(id) as val                              \
+                    FROM service                                         \
+                    WHERE service.owner = '" + req.user.sub     + "' AND \
+                          service.id    = '" + req.body.service + "'"; 
+    DBHelper.doQuery(sqlQuery, function(err, data) {
+        console.log(data);
+        if(data[0].val != 1) return res.sendStatus(process.env.UNAUTHORIZED);
+        next();
+    });
+}
